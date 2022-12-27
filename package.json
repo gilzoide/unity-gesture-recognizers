@@ -1,0 +1,11 @@
+{
+  "name": "com.gilzoide.gesture-recognizers",
+  "displayName": "Gesture Recognizers",
+  "version": "1.0.0",
+  "description": "Gesture Recognizer scripts based on Input or EventSystem handlers",
+  "homepage": "https://github.com/gilzoide/unity-gesture-recognizers",
+  "license": "Unlicense",
+  "author": {
+    "name": "Gil Barbosa Reis"
+  }
+}
