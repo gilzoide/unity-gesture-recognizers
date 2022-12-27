@@ -18,7 +18,10 @@ namespace Gilzoide.GestureRecognizers
 
         public void TouchMoved(int touchId, Vector2 position)
         {
-            _touchPositions[touchId] = position;
+            if (_touchPositions.ContainsKey(touchId))
+            {
+                _touchPositions[touchId] = position;
+            }
         }
 
         public void TouchEnded(int touchId)
