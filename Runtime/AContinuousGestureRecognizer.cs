@@ -2,7 +2,7 @@ using UnityEngine.Events;
 
 namespace Gilzoide.GestureRecognizers
 {
-    public abstract class ContinuousGestureRecognizer : GestureRecognizer
+    public abstract class AContinuousGestureRecognizer : AGestureRecognizer
     {
         public UnityEvent OnGestureEnded;
     }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Gilzoide.GestureRecognizers
 {
-    public abstract class PanGestureRecognizer : ContinuousGestureRecognizer
+    public abstract class PanGestureRecognizer : AContinuousGestureRecognizer
     {
         [Min(1)] public int NumberOfTouchesRequired = 1;
         public UnityEventVector2 OnPositionChanged;

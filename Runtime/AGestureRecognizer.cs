@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 namespace Gilzoide.GestureRecognizers
 {
-    public abstract class GestureRecognizer : MonoBehaviour
+    public abstract class AGestureRecognizer : MonoBehaviour
     {
         public UnityEvent OnGestureRecognized;
 

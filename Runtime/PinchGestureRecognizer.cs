@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Gilzoide.GestureRecognizers
 {
-    public abstract class PinchGestureRecognizer : ContinuousGestureRecognizer
+    public abstract class PinchGestureRecognizer : AContinuousGestureRecognizer
     {
         [Min(2)] public int NumberOfTouchesRequired = 2;
         public UnityEventFloat OnScaleChanged;
