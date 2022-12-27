@@ -8,8 +8,9 @@ namespace Gilzoide.GestureRecognizers
         protected Dictionary<int, Vector2> _touchPositions = new Dictionary<int, Vector2>();
 
         public int Count => _touchPositions.Count;
-        public Vector2? Centroid => FindCentroid();
         public ICollection<Vector2> TouchPositions => _touchPositions.Values;
+        public Vector2? Centroid => FindCentroid();
+        public float? AverageDistanceToCentroid => FindAverageDistanceToCentroid();
 
         public void TouchStarted(int touchId, Vector2 position)
         {
@@ -31,17 +32,33 @@ namespace Gilzoide.GestureRecognizers
 
         protected Vector2? FindCentroid()
         {
-            if (_touchPositions.Count == 0)
+            if (Count == 0)
             {
                 return null;
             }
 
             Vector2 centroid = Vector2.zero;
-            foreach (Vector2 position in _touchPositions.Values)
+            foreach (Vector2 position in TouchPositions)
             {
                 centroid += position;
             }
-            return centroid / _touchPositions.Count;
+            return centroid / Count;
+        }
+
+        protected float? FindAverageDistanceToCentroid()
+        {
+            if (Count == 0)
+            {
+                return null;
+            }
+
+            Vector2 centroid = Centroid.Value;
+            float totalDistance = 0;
+            foreach (Vector2 position in TouchPositions)
+            {
+                totalDistance += Vector2.Distance(position, centroid);
+            }
+            return totalDistance / Count;
         }
     }
 }

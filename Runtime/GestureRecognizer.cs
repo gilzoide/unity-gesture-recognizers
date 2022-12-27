@@ -11,8 +11,9 @@ namespace Gilzoide.GestureRecognizers
         protected readonly TouchTracker _touchTracker = new TouchTracker();
 
         public int TouchCount => _touchTracker.Count;
-        public Vector2? Centroid => _touchTracker.Centroid;
         public ICollection<Vector2> TouchPositions => _touchTracker.TouchPositions;
+        public Vector2? Centroid => _touchTracker.Centroid;
+        public float? AverageDistanceToCentroid => _touchTracker.AverageDistanceToCentroid;
 
         protected virtual void TouchStarted(int touchId, Vector2 position)
         {
