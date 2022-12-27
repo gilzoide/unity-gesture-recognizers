@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace Gilzoide.GestureRecognizers
 {
-    public abstract class PanGestureRecognizer : GestureRecognizer
+    public abstract class PanGestureRecognizer : ContinuousGestureRecognizer
     {
         [Min(1)] public int MinimumTouchesRequired = 1;
         [Min(1)] public int MaximumTouchesRequired = 1;
@@ -13,8 +13,9 @@ namespace Gilzoide.GestureRecognizers
 
         protected override void TouchStarted(int touchId, Vector2 position)
         {
+            bool wasPanning = IsPanning;
             base.TouchStarted(touchId, position);
-            if (IsPanning)
+            if (IsPanning && !wasPanning)
             {
                 OnGestureRecognized.Invoke();
             }
@@ -26,6 +27,16 @@ namespace Gilzoide.GestureRecognizers
             if (IsPanning)
             {
                 OnPositionChanged.Invoke(Centroid.Value);
+            }
+        }
+
+        protected override void TouchEnded(int touchId)
+        {
+            bool wasPanning = IsPanning;
+            base.TouchEnded(touchId);
+            if (!IsPanning && wasPanning)
+            {
+                OnGestureEnded.Invoke();
             }
         }
     }
