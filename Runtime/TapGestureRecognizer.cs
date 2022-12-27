@@ -1,20 +1,15 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Gilzoide.GestureRecognizers
 {
-    public abstract class TapGestureRecognizer : MonoBehaviour
+    public abstract class TapGestureRecognizer : GestureRecognizer
     {
         [Min(1)] public int NumberOfTapsRequired = 1;
         [Min(1)] public int NumberOfTouchesRequired = 1;
         [Min(0)] public float MultiTapDelayWindow = 0.5f;
-        public UnityEvent OnGestureRecognized;
 
-        protected readonly TouchTracker _touchTracker = new TouchTracker();
         protected int _tapsRecognized = 0;
         protected float _lastTapTime;
-
-        public Vector2? Position => _touchTracker.Centroid;
 
         protected static float CurrentTime => Time.unscaledTime;
 
@@ -24,9 +19,9 @@ namespace Gilzoide.GestureRecognizers
             _lastTapTime = CurrentTime;
         }
 
-        protected void TouchStarted(int touchId, Vector2 position)
+        protected override void TouchStarted(int touchId, Vector2 position)
         {
-            _touchTracker.TouchStarted(touchId, position);
+            base.TouchStarted(touchId, position);
             if (_tapsRecognized > 0 && CurrentTime > _lastTapTime + MultiTapDelayWindow)
             {
                 Clear();
@@ -43,11 +38,6 @@ namespace Gilzoide.GestureRecognizers
                     Clear();
                 }
             }
-        }
-
-        protected void TouchEnded(int touchId)
-        {
-            _touchTracker.TouchEnded(touchId);
         }
     }
 }

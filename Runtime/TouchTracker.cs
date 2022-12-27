@@ -7,8 +7,9 @@ namespace Gilzoide.GestureRecognizers
     {
         protected Dictionary<int, Vector2> _touchPositions = new Dictionary<int, Vector2>();
 
-        public Vector2? Centroid => FindCentroid();
         public int Count => _touchPositions.Count;
+        public Vector2? Centroid => FindCentroid();
+        public ICollection<Vector2> TouchPositions => _touchPositions.Values;
 
         public void TouchStarted(int touchId, Vector2 position)
         {

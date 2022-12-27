@@ -1,21 +1,16 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Gilzoide.GestureRecognizers
 {
-    public abstract class LongPressGestureRecognizer : MonoBehaviour
+    public abstract class LongPressGestureRecognizer : GestureRecognizer
     {
         [Min(1)] public int NumberOfTouchesRequired = 1;
         [Min(float.Epsilon)] public float PressDuration = 1f;
         public float AllowableMovement = 10;
-        public UnityEvent OnGestureRecognized;
 
-        protected readonly TouchTracker _touchTracker = new TouchTracker();
         protected Coroutine _pressCoroutine;
         protected Vector2 _initialPosition;
-
-        public Vector2? Position => _touchTracker.Centroid;
 
         public void Cancel()
         {
@@ -25,32 +20,32 @@ namespace Gilzoide.GestureRecognizers
             }
         }
 
-        protected void TouchStarted(int touchId, Vector2 position)
+        protected override void TouchStarted(int touchId, Vector2 position)
         {
-            _touchTracker.TouchStarted(touchId, position);
-            
-            if (_touchTracker.Count == NumberOfTouchesRequired)
+            base.TouchStarted(touchId, position);
+
+            if (TouchCount == NumberOfTouchesRequired)
             {
-                _initialPosition = _touchTracker.Centroid.Value;
+                _initialPosition = Centroid.Value;
                 _pressCoroutine = StartCoroutine(RecognizePress());
             }
         }
 
-        protected void TouchMoved(int touchId, Vector2 position)
+        protected override void TouchMoved(int touchId, Vector2 position)
         {
-            _touchTracker.TouchMoved(touchId, position);
+            base.TouchMoved(touchId, position);
 
-            if (_touchTracker.Count >= NumberOfTouchesRequired && Vector2.Distance(_initialPosition, _touchTracker.Centroid.Value) > AllowableMovement)
+            if (TouchCount >= NumberOfTouchesRequired && Vector2.Distance(_initialPosition, Centroid.Value) > AllowableMovement)
             {
                 Cancel();
             }
         }
 
-        protected void TouchEnded(int touchId)
+        protected override void TouchEnded(int touchId)
         {
-            _touchTracker.TouchEnded(touchId);
+            base.TouchEnded(touchId);
 
-            if (_touchTracker.Count < NumberOfTouchesRequired)
+            if (TouchCount < NumberOfTouchesRequired)
             {
                 Cancel();
             }
