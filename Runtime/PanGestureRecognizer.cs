@@ -10,6 +10,8 @@ namespace Gilzoide.GestureRecognizers
         public UnityEvent<Vector2> OnPositionChanged;
 
         public bool IsPanning => TouchCount.IsBetween(MinimumTouchesRequired, MaximumTouchesRequired);
+        
+        protected Vector2 _initialCentroid;
 
         protected override void TouchStarted(int touchId, Vector2 position)
         {
@@ -17,6 +19,7 @@ namespace Gilzoide.GestureRecognizers
             base.TouchStarted(touchId, position);
             if (IsPanning && !wasPanning)
             {
+                _initialCentroid = Centroid.Value;
                 OnGestureRecognized.Invoke();
             }
         }
@@ -26,7 +29,7 @@ namespace Gilzoide.GestureRecognizers
             base.TouchMoved(touchId, position);
             if (IsPanning)
             {
-                OnPositionChanged.Invoke(Centroid.Value);
+                OnPositionChanged.Invoke(Centroid.Value - _initialCentroid);
             }
         }
 
