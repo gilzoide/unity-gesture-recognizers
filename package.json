@@ -2,7 +2,7 @@
   "name": "com.gilzoide.gesture-recognizers",
   "displayName": "Gesture Recognizers",
   "version": "1.0.0",
-  "description": "Gesture Recognizer scripts based on uGUI's EventSystem handlers",
+  "description": "Gesture Recognizer scripts based on EventSystems handlers",
   "homepage": "https://github.com/gilzoide/unity-gesture-recognizers",
   "license": "Unlicense",
   "author": {
