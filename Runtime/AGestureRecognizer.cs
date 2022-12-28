@@ -16,19 +16,33 @@ namespace Gilzoide.GestureRecognizers
         public Vector2? Centroid => _touchTracker.Centroid;
         public float? AverageDistanceToCentroid => _touchTracker.AverageDistanceToCentroid;
 
+        void Start()
+        {
+            // no-op, but it's here so we can disable the scripts via inspector
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
-            TouchStarted(eventData.pointerId, eventData.position);
+            if (isActiveAndEnabled)
+            {
+                TouchStarted(eventData.pointerId, eventData.position);
+            }
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            TouchEnded(eventData.pointerId);
+            if (isActiveAndEnabled)
+            {
+                TouchEnded(eventData.pointerId);
+            }
         }
         
         public void OnDrag(PointerEventData eventData)
         {
-            TouchMoved(eventData.pointerId, eventData.position);
+            if (isActiveAndEnabled)
+            {
+                TouchMoved(eventData.pointerId, eventData.position);
+            }
         }
 
         protected virtual void TouchStarted(int touchId, Vector2 position)
