@@ -30,6 +30,20 @@ namespace Gilzoide.GestureRecognizers
             _touchPositions.Remove(touchId);
         }
 
+        public IEnumerable<Vector2> EnumerateTouchVectors()
+        {
+            if (Count == 0)
+            {
+                yield break;
+            }
+
+            Vector2 centroid = Centroid.Value;
+            foreach (Vector2 position in TouchPositions)
+            {
+                yield return position - centroid;
+            }
+        }
+
         protected Vector2? FindCentroid()
         {
             if (Count == 0)

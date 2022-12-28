@@ -8,6 +8,7 @@ Implemented gestures:
 - Long press (configurable number of touches and press duration)
 - Pan (configurable number of touches)
 - Pinch (configurable number of touches, at least 2)
+- Twist (configurable number of touches, at least 2)
 
 
 ## How to install
