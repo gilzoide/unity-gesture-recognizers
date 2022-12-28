@@ -4,10 +4,10 @@ namespace Gilzoide.GestureRecognizers
 {
     public class PinchGestureRecognizer : AContinuousGestureRecognizer
     {
-        [Min(2)] public int NumberOfTouchesRequired = 2;
+        [Min(2)] public int NumberOfTouches = 2;
         public UnityEventFloat OnScaleChanged;
 
-        public bool IsPinching => TouchCount >= NumberOfTouchesRequired;
+        public bool IsPinching => TouchCount >= NumberOfTouches;
         public float Scale => IsPinching ? CurrentScale : 1;
 
         protected float _initialDistanceToCentroid = 1;

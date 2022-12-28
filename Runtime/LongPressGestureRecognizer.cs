@@ -5,7 +5,7 @@ namespace Gilzoide.GestureRecognizers
 {
     public class LongPressGestureRecognizer : AGestureRecognizer
     {
-        [Min(1)] public int NumberOfTouchesRequired = 1;
+        [Min(1)] public int NumberOfTouches = 1;
         [Min(float.Epsilon)] public float PressDuration = 1f;
         public float AllowableMovement = 10;
 
@@ -24,7 +24,7 @@ namespace Gilzoide.GestureRecognizers
         {
             base.TouchStarted(touchId, position);
 
-            if (TouchCount == NumberOfTouchesRequired)
+            if (TouchCount == NumberOfTouches)
             {
                 _initialPosition = Centroid.Value;
                 _pressCoroutine = StartCoroutine(RecognizePress());
@@ -35,7 +35,7 @@ namespace Gilzoide.GestureRecognizers
         {
             base.TouchMoved(touchId, position);
 
-            if (TouchCount >= NumberOfTouchesRequired && Vector2.Distance(_initialPosition, Centroid.Value) > AllowableMovement)
+            if (TouchCount >= NumberOfTouches && Vector2.Distance(_initialPosition, Centroid.Value) > AllowableMovement)
             {
                 Cancel();
             }
@@ -45,7 +45,7 @@ namespace Gilzoide.GestureRecognizers
         {
             base.TouchEnded(touchId);
 
-            if (TouchCount < NumberOfTouchesRequired)
+            if (TouchCount < NumberOfTouches)
             {
                 Cancel();
             }

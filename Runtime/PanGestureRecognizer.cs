@@ -4,10 +4,10 @@ namespace Gilzoide.GestureRecognizers
 {
     public class PanGestureRecognizer : AContinuousGestureRecognizer
     {
-        [Min(1)] public int NumberOfTouchesRequired = 1;
+        [Min(1)] public int NumberOfTouches = 1;
         public UnityEventVector2 OnPositionChanged;
 
-        public bool IsPanning => TouchCount >= NumberOfTouchesRequired;
+        public bool IsPanning => TouchCount >= NumberOfTouches;
         
         protected Vector2 _initialCentroid;
 

@@ -4,8 +4,8 @@ namespace Gilzoide.GestureRecognizers
 {
     public class TapGestureRecognizer : AGestureRecognizer
     {
-        [Min(1)] public int NumberOfTapsRequired = 1;
-        [Min(1)] public int NumberOfTouchesRequired = 1;
+        [Min(1)] public int NumberOfTouches = 1;
+        [Min(1)] public int NumberOfTaps = 1;
         [Min(0)] public float MultiTapDelayWindow = 0.5f;
 
         protected int _tapsRecognized = 0;
@@ -27,12 +27,12 @@ namespace Gilzoide.GestureRecognizers
                 Clear();
             }
 
-            if (_touchTracker.Count == NumberOfTouchesRequired)
+            if (_touchTracker.Count == NumberOfTouches)
             {
                 _tapsRecognized++;
                 _lastTapTime = CurrentTime;
 
-                if (_tapsRecognized == NumberOfTapsRequired)
+                if (_tapsRecognized == NumberOfTaps)
                 {
                     OnGestureRecognized.Invoke();
                     Clear();
