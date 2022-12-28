@@ -46,7 +46,7 @@ namespace Gilzoide.GestureRecognizers
                 OnGestureRecognized.Invoke();
             }
 
-            using (ListUtils.GetList(_touchTracker.EnumerateTouchVectors(), out List<Vector2> previousVectors))
+            using (PooledListUtils.GetList(_touchTracker.EnumerateTouchVectors(), out List<Vector2> previousVectors))
             {
                 base.TouchMoved(touchId, position);
 
