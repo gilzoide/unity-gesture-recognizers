@@ -31,12 +31,17 @@ namespace Gilzoide.GestureRecognizers
             {
                 _tapsRecognized++;
                 _lastTapTime = CurrentTime;
+            }
+        }
 
-                if (_tapsRecognized == NumberOfTaps)
-                {
-                    OnGestureRecognized.Invoke();
-                    Clear();
-                }
+        protected override void TouchEnded(int touchId)
+        {
+            base.TouchEnded(touchId);
+
+            if (_tapsRecognized == NumberOfTaps && CurrentTime <= _lastTapTime + MultiTapDelayWindow)
+            {
+                OnGestureRecognized.Invoke();
+                Clear();
             }
         }
     }
