@@ -10,9 +10,8 @@ namespace Gilzoide.GestureRecognizers
         public UnityEventVector2 OnPositionDelta;
 
         public bool IsPanning => TouchCount >= NumberOfTouches;
+        public Vector2 Position => IsPanning ? GetPosition() : Vector2.zero;
         
-        protected Vector2 _initialCentroid;
-        protected Vector2 _lastPosition;
         protected bool _firstMove;
 
         protected override void TouchStarted(int touchId, Vector2 position)
@@ -25,27 +24,31 @@ namespace Gilzoide.GestureRecognizers
             base.TouchStarted(touchId, position);
             if (IsPanning)
             {
-                _initialCentroid = _lastPosition = Centroid.Value;
                 _firstMove = true;
             }
         }
 
         protected override void TouchMoved(int touchId, Vector2 position)
         {
-            base.TouchMoved(touchId, position);
-            if (IsPanning)
+            if (!IsPanning)
             {
-                if (_firstMove)
-                {
-                    _firstMove = false;
-                    OnGestureRecognized.Invoke();
-                }
-
-                Vector2 currentPosition = Centroid.Value;
-                OnPositionChanged.Invoke(currentPosition);
-                OnPositionDelta.Invoke(currentPosition - _lastPosition);
-                _lastPosition = currentPosition;
+                base.TouchMoved(touchId, position);
+                return;
             }
+
+            if (_firstMove)
+            {
+                _firstMove = false;
+                OnGestureRecognized.Invoke();
+            }
+
+            Vector2 previousPosition = GetPosition();
+            
+            base.TouchMoved(touchId, position);
+
+            Vector2 currentPosition = GetPosition();
+            OnPositionDelta.Invoke(currentPosition - previousPosition);
+            OnPositionChanged.Invoke(currentPosition);
         }
 
         protected override void TouchEnded(int touchId)
@@ -57,6 +60,11 @@ namespace Gilzoide.GestureRecognizers
                 _firstMove = false;
                 OnGestureEnded.Invoke();
             }
+        }
+
+        protected Vector2 GetPosition()
+        {
+            return Centroid.Value;
         }
     }
 }

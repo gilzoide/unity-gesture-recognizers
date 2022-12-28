@@ -10,11 +10,9 @@ namespace Gilzoide.GestureRecognizers
         public UnityEventFloat OnScaleDelta;
 
         public bool IsPinching => TouchCount >= NumberOfTouches;
-        public float Scale => IsPinching ? CurrentScale : 1;
+        public float Scale => IsPinching ? GetCurrentScale() : 1;
 
-        protected float CurrentScale => AverageDistanceToCentroid.Value / _initialDistanceToCentroid;
         protected float _initialDistanceToCentroid = 1;
-        protected float _lastScale;
         protected bool _firstMove;
 
         protected override void TouchStarted(int touchId, Vector2 position)
@@ -28,27 +26,31 @@ namespace Gilzoide.GestureRecognizers
             if (IsPinching)
             {
                 _initialDistanceToCentroid = Mathf.Max(0.0001f, AverageDistanceToCentroid.Value);
-                _lastScale = 1;
                 _firstMove = true;
             }
         }
 
         protected override void TouchMoved(int touchId, Vector2 position)
         {
-            base.TouchMoved(touchId, position);
-            if (IsPinching)
+            if (!IsPinching)
             {
-                if (_firstMove)
-                {
-                    _firstMove = false;
-                    OnGestureRecognized.Invoke();
-                }
-                
-                float currentScale = CurrentScale;
-                OnScaleChanged.Invoke(currentScale);
-                OnScaleDelta.Invoke(currentScale - _lastScale);
-                _lastScale = currentScale;
+                base.TouchMoved(touchId, position);
+                return;
             }
+
+            if (_firstMove)
+            {
+                _firstMove = false;
+                OnGestureRecognized.Invoke();
+            }
+
+            float previousScale = GetCurrentScale();
+
+            base.TouchMoved(touchId, position);
+   
+            float currentScale = GetCurrentScale();
+            OnScaleDelta.Invoke(currentScale - previousScale);
+            OnScaleChanged.Invoke(currentScale);
         }
 
         protected override void TouchEnded(int touchId)
@@ -57,8 +59,14 @@ namespace Gilzoide.GestureRecognizers
             base.TouchEnded(touchId);
             if (!IsPinching && wasPinching)
             {
+                _firstMove = false;
                 OnGestureEnded.Invoke();
             }
+        }
+
+        protected float GetCurrentScale()
+        {
+            return AverageDistanceToCentroid.Value / _initialDistanceToCentroid;
         }
     }
 }
