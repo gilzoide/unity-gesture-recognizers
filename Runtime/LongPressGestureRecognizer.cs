@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Gilzoide.GestureRecognizers
 {
-    public abstract class LongPressGestureRecognizer : AGestureRecognizer
+    public class LongPressGestureRecognizer : AGestureRecognizer
     {
         [Min(1)] public int NumberOfTouchesRequired = 1;
         [Min(float.Epsilon)] public float PressDuration = 1f;

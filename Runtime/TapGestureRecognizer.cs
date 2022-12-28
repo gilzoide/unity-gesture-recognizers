@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Gilzoide.GestureRecognizers
 {
-    public abstract class TapGestureRecognizer : AGestureRecognizer
+    public class TapGestureRecognizer : AGestureRecognizer
     {
         [Min(1)] public int NumberOfTapsRequired = 1;
         [Min(1)] public int NumberOfTouchesRequired = 1;
