@@ -4,7 +4,9 @@ namespace Gilzoide.GestureRecognizers
 {
     public class PanGestureRecognizer : AContinuousGestureRecognizer
     {
+        [Header("Options")]
         [Min(1)] public int NumberOfTouches = 1;
+        
         [Header("Pan events")]
         public UnityEventVector2 OnPositionDelta;
         public UnityEventVector2 OnPositionChanged;

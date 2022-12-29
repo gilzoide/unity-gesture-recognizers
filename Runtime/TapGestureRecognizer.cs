@@ -4,6 +4,7 @@ namespace Gilzoide.GestureRecognizers
 {
     public class TapGestureRecognizer : AGestureRecognizer
     {
+        [Header("Options")]
         [Min(1)] public int NumberOfTouches = 1;
         [Min(1)] public int NumberOfTaps = 1;
         [Min(0)] public float MultiTapDelayWindow = 0.5f;

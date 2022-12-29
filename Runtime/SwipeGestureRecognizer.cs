@@ -4,6 +4,7 @@ namespace Gilzoide.GestureRecognizers
 {
     public class SwipeGestureRecognizer : AGestureRecognizer
     {
+        [Header("Options")]
         [Min(1)] public int NumberOfTouches = 1;
         [Min(0)] public float MinimumDistance = 50;
         [Min(0)] public float MinimumVelocity = 1000;

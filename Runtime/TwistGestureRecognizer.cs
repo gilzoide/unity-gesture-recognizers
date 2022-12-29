@@ -6,7 +6,9 @@ namespace Gilzoide.GestureRecognizers
 {
     public class TwistGestureRecognizer : AContinuousGestureRecognizer
     {
+        [Header("Options")]
         [Min(2)] public int NumberOfTouches = 2;
+        
         [Header("Twist events")]
         public UnityEventFloat OnRotationDelta;
         public UnityEventFloat OnRotationChanged;

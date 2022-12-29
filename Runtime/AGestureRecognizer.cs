@@ -7,6 +7,7 @@ namespace Gilzoide.GestureRecognizers
 {
     public abstract class AGestureRecognizer : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IInitializePotentialDragHandler, IDragHandler
     {
+        [Header("General gesture events")]
         public UnityEvent OnGestureRecognized;
 
         protected readonly TouchTracker _touchTracker = new TouchTracker();

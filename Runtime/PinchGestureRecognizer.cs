@@ -4,7 +4,9 @@ namespace Gilzoide.GestureRecognizers
 {
     public class PinchGestureRecognizer : AContinuousGestureRecognizer
     {
+        [Header("Options")]
         [Min(2)] public int NumberOfTouches = 2;
+        
         [Header("Pinch events")]
         public UnityEventFloat OnScaleDelta;
         public UnityEventFloat OnScaleChanged;
