@@ -19,23 +19,18 @@ namespace Gilzoide.GestureRecognizers
 
         void Start()
         {
-            // no-op, but it's here so we can disable the scripts via inspector
+            // No-op, but it's here so we can disable the scripts via inspector
+            // Disabled scripts don't receive pointer events
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (isActiveAndEnabled)
-            {
-                TouchStarted(eventData.pointerId, eventData.position);
-            }
+            TouchStarted(eventData.pointerId, eventData.position);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (isActiveAndEnabled)
-            {
-                TouchEnded(eventData.pointerId);
-            }
+            TouchEnded(eventData.pointerId);
         }
 
         public void OnInitializePotentialDrag(PointerEventData eventData)
@@ -45,10 +40,7 @@ namespace Gilzoide.GestureRecognizers
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (isActiveAndEnabled)
-            {
-                TouchMoved(eventData.pointerId, eventData.position);
-            }
+            TouchMoved(eventData.pointerId, eventData.position);
         }
 
         protected virtual void TouchStarted(int touchId, Vector2 position)
