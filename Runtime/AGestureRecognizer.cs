@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Gilzoide.GestureRecognizers
 {
-    public abstract class AGestureRecognizer : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+    public abstract class AGestureRecognizer : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IInitializePotentialDragHandler, IDragHandler
     {
         public UnityEvent OnGestureRecognized;
 
@@ -36,7 +36,12 @@ namespace Gilzoide.GestureRecognizers
                 TouchEnded(eventData.pointerId);
             }
         }
-        
+
+        public void OnInitializePotentialDrag(PointerEventData eventData)
+        {
+            eventData.useDragThreshold = false;
+        }
+
         public void OnDrag(PointerEventData eventData)
         {
             if (isActiveAndEnabled)

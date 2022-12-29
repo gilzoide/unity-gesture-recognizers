@@ -6,8 +6,8 @@ namespace Gilzoide.GestureRecognizers
     {
         [Min(2)] public int NumberOfTouches = 2;
         [Header("Pinch events")]
-        public UnityEventFloat OnScaleChanged;
         public UnityEventFloat OnScaleDelta;
+        public UnityEventFloat OnScaleChanged;
 
         public bool IsPinching => TouchCount >= NumberOfTouches;
         public float Scale => IsPinching ? GetCurrentScale() : 1;

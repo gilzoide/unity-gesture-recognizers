@@ -6,8 +6,8 @@ namespace Gilzoide.GestureRecognizers
     {
         [Min(1)] public int NumberOfTouches = 1;
         [Header("Pan events")]
-        public UnityEventVector2 OnPositionChanged;
         public UnityEventVector2 OnPositionDelta;
+        public UnityEventVector2 OnPositionChanged;
 
         public bool IsPanning => TouchCount >= NumberOfTouches;
         public Vector2 Position => IsPanning ? GetPosition() : Vector2.zero;

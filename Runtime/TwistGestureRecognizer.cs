@@ -8,8 +8,8 @@ namespace Gilzoide.GestureRecognizers
     {
         [Min(2)] public int NumberOfTouches = 2;
         [Header("Twist events")]
-        public UnityEventFloat OnRotationChanged;
         public UnityEventFloat OnRotationDelta;
+        public UnityEventFloat OnRotationChanged;
 
         public bool IsTwisting => TouchCount >= NumberOfTouches;
         public float Rotation => IsTwisting ? _accumulatedRotation : 0;
