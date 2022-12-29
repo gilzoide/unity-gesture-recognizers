@@ -14,7 +14,6 @@ namespace Gilzoide.GestureRecognizers
         [Header("Swipe events")]
         public UnityEventSwipeDirection OnSwipeRecognized;
 
-
         public bool IsSwiping => TouchCount >= NumberOfTouches;
         public SwipeDirection Direction { get; protected set; } = SwipeDirection.None;
 
@@ -72,20 +71,20 @@ namespace Gilzoide.GestureRecognizers
             return Centroid.Value;
         }
 
-        public static SwipeDirection GetSwipeDirection(Vector2 vector, float time, float distanceThreshold, float velocityThreshold)
+        public static SwipeDirection GetSwipeDirection(Vector2 positionDelta, float timeDelta, float distanceThreshold, float velocityThreshold)
         {
-            float diffX = Mathf.Abs(vector.x);
-            float diffY = Mathf.Abs(vector.y);
+            float diffX = Mathf.Abs(positionDelta.x);
+            float diffY = Mathf.Abs(positionDelta.y);
             if (diffX >= diffY)
             {
-                if (diffX >= distanceThreshold && time > 0 && (diffX / time) >= velocityThreshold)
+                if (diffX >= distanceThreshold && timeDelta > 0 && (diffX / timeDelta) >= velocityThreshold)
                 {
-                    return vector.x > 0 ? SwipeDirection.Right : SwipeDirection.Left;
+                    return positionDelta.x > 0 ? SwipeDirection.Right : SwipeDirection.Left;
                 }
             }
-            else if (diffY >= distanceThreshold && time > 0 && (diffY / time) >= velocityThreshold)
+            else if (diffY >= distanceThreshold && timeDelta > 0 && (diffY / timeDelta) >= velocityThreshold)
             {
-                return vector.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
+                return positionDelta.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
             }
             return SwipeDirection.None;
         }
