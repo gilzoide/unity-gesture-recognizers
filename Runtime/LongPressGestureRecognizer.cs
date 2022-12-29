@@ -8,6 +8,7 @@ namespace Gilzoide.GestureRecognizers
         [Min(1)] public int NumberOfTouches = 1;
         [Min(float.Epsilon)] public float PressDuration = 1f;
         public float AllowableMovement = 10;
+        public TimeProvider TimeProvider = TimeProvider.UnscaledTime;
 
         protected Coroutine _pressCoroutine;
         protected Vector2 _initialPosition;
@@ -53,7 +54,7 @@ namespace Gilzoide.GestureRecognizers
 
         protected IEnumerator RecognizePress()
         {
-            yield return new WaitForSecondsRealtime(PressDuration);
+            yield return TimeProvider.WaitForSeconds(PressDuration);
             OnGestureRecognized.Invoke();
         }
     }
