@@ -9,6 +9,7 @@ Implemented gestures:
 - Pan (configurable number of touches)
 - Pinch (configurable number of touches, at least 2)
 - Twist (configurable number of touches, at least 2)
+- Swipe (configurable number of touches, supported directions, minimum distance, minimum velocity)
 
 
 ## How to install
