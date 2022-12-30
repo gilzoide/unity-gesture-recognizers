@@ -7,14 +7,13 @@ namespace Gilzoide.GestureRecognizers.Recognizers
     [Serializable]
     public class SwipeGestureRecognizer : AGestureRecognizer
     {
-        [Header("Options")]
         [Min(1)] public int NumberOfTouches = 1;
         [Min(0)] public float MinimumDistance = 1;
         [Min(0)] public float MinimumVelocity = 1000;
         public SwipeDirection SupportedDirections = SwipeDirection.Up;
         public TimeProvider TimeProvider = TimeProvider.UnscaledTime;
 
-        [Header("Swipe events")]
+        [Space]
         public UnityEventSwipeDirection OnSwipeRecognized;
 
         public bool IsSwiping => TouchCount >= NumberOfTouches;
@@ -52,7 +51,6 @@ namespace Gilzoide.GestureRecognizers.Recognizers
                 if ((direction & SupportedDirections) != 0)
                 {
                     Direction = direction;
-                    OnGestureRecognized.Invoke();
                     OnSwipeRecognized.Invoke(direction);
                 }
             }

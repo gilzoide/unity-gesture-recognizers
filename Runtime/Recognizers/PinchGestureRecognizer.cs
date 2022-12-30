@@ -1,18 +1,20 @@
 using System;
 using Gilzoide.GestureRecognizers.Recognizers.Common;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Gilzoide.GestureRecognizers.Recognizers
 {
     [Serializable]
-    public class PinchGestureRecognizer : AContinuousGestureRecognizer
+    public class PinchGestureRecognizer : AGestureRecognizer
     {
-        [Header("Options")]
         [Min(2)] public int NumberOfTouches = 2;
         
-        [Header("Pinch events")]
+        [Space]
+        public UnityEvent OnPinchStarted;
         public UnityEventFloat OnScaleDelta;
         public UnityEventFloat OnScaleChanged;
+        public UnityEvent OnGestureEnded;
 
         public bool IsPinching => TouchCount >= NumberOfTouches;
         public float Scale => IsPinching ? GetCurrentScale() : 1;
@@ -46,7 +48,7 @@ namespace Gilzoide.GestureRecognizers.Recognizers
             if (_firstMove)
             {
                 _firstMove = false;
-                OnGestureRecognized.Invoke();
+                OnPinchStarted.Invoke();
             }
 
             float previousScale = GetCurrentScale();

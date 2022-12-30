@@ -1,15 +1,18 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Gilzoide.GestureRecognizers.Recognizers
 {
     [Serializable]
     public class TapGestureRecognizer : AGestureRecognizer
     {
-        [Header("Options")]
         [Min(1)] public int NumberOfTouches = 1;
         [Min(1)] public int NumberOfTaps = 1;
         [Min(0)] public float MultiTapDelayWindow = 0.5f;
+
+        [Space]
+        public UnityEvent OnTapRecognized;
 
         protected int _tapsRecognized = 0;
         protected float _lastTapTime;
@@ -43,7 +46,7 @@ namespace Gilzoide.GestureRecognizers.Recognizers
 
             if (_tapsRecognized == NumberOfTaps && CurrentTime <= _lastTapTime + MultiTapDelayWindow)
             {
-                OnGestureRecognized.Invoke();
+                OnTapRecognized.Invoke();
                 Clear();
             }
         }

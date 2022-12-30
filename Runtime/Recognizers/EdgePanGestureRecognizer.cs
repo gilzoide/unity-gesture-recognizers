@@ -1,24 +1,24 @@
 using System;
 using Gilzoide.GestureRecognizers.Recognizers.Common;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Gilzoide.GestureRecognizers.Recognizers
 {
     [Serializable]
-    public class EdgePanGestureRecognizer : AContinuousGestureRecognizer
+    public class EdgePanGestureRecognizer : AGestureRecognizer
     {
-        [Header("Options")]
         [Min(1)] public int NumberOfTouches = 1;
         [Min(0.0001f)] public float EdgeThreshold = 50;
         public RectEdge SupportedEdges = RectEdge.Left;
 
-        [Header("Pan events")]
-        public UnityEventRectEdge OnEdgePan;
+        [Space]
+        public UnityEventRectEdge OnEdgePanStarted;
         public UnityEventVector2 OnPositionDelta;
         public UnityEventVector2 OnPositionChanged;
+        public UnityEvent OnGestureEnded;
 
         public Rect Rect { get; set; }
-
 
         public bool IsPanning => TouchCount >= NumberOfTouches;
         public RectEdge Edge => IsPanning ? _possibleEdges : RectEdge.None;
@@ -64,8 +64,7 @@ namespace Gilzoide.GestureRecognizers.Recognizers
             if (_firstMove)
             {
                 _firstMove = false;
-                OnGestureRecognized.Invoke();
-                OnEdgePan.Invoke(_possibleEdges);
+                OnEdgePanStarted.Invoke(_possibleEdges);
             }
 
             Vector2 previousPosition = GetPosition();

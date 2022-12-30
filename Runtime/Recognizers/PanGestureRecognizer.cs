@@ -1,18 +1,20 @@
 using System;
 using Gilzoide.GestureRecognizers.Recognizers.Common;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Gilzoide.GestureRecognizers.Recognizers
 {
     [Serializable]
-    public class PanGestureRecognizer : AContinuousGestureRecognizer
+    public class PanGestureRecognizer : AGestureRecognizer
     {
-        [Header("Options")]
         [Min(1)] public int NumberOfTouches = 1;
         
-        [Header("Pan events")]
+        [Space]
+        public UnityEvent OnPanStarted;
         public UnityEventVector2 OnPositionDelta;
         public UnityEventVector2 OnPositionChanged;
+        public UnityEvent OnGestureEnded;
 
         public bool IsPanning => TouchCount >= NumberOfTouches;
         public Vector2 Position => IsPanning ? GetPosition() : Vector2.zero;
@@ -44,7 +46,7 @@ namespace Gilzoide.GestureRecognizers.Recognizers
             if (_firstMove)
             {
                 _firstMove = false;
-                OnGestureRecognized.Invoke();
+                OnPanStarted.Invoke();
             }
 
             Vector2 previousPosition = GetPosition();

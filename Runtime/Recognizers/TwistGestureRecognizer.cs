@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using Gilzoide.GestureRecognizers.Recognizers.Common;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Gilzoide.GestureRecognizers.Recognizers
 {
     [Serializable]
-    public class TwistGestureRecognizer : AContinuousGestureRecognizer
+    public class TwistGestureRecognizer : AGestureRecognizer
     {
-        [Header("Options")]
         [Min(2)] public int NumberOfTouches = 2;
         
-        [Header("Twist events")]
+        [Space]
+        public UnityEvent OnTwistStarted;
         public UnityEventFloat OnRotationDelta;
         public UnityEventFloat OnRotationChanged;
+        public UnityEvent OnGestureEnded;
 
         public bool IsTwisting => TouchCount >= NumberOfTouches;
         public float Rotation => IsTwisting ? _accumulatedRotation : 0;
@@ -48,7 +50,7 @@ namespace Gilzoide.GestureRecognizers.Recognizers
             if (_firstMove)
             {
                 _firstMove = false;
-                OnGestureRecognized.Invoke();
+                OnTwistStarted.Invoke();
             }
 
             using (PooledListUtils.GetList(_touchTracker.EnumerateTouchVectors(), out List<Vector2> previousVectors))

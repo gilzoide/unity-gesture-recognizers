@@ -2,17 +2,20 @@ using System;
 using System.Collections;
 using Gilzoide.GestureRecognizers.Recognizers.Common;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Gilzoide.GestureRecognizers.Recognizers
 {
     [Serializable]
     public class LongPressGestureRecognizer : AGestureRecognizer
     {
-        [Header("Options")]
         [Min(1)] public int NumberOfTouches = 1;
         [Min(float.Epsilon)] public float PressDuration = 1f;
         public float AllowableMovement = 10;
         public TimeProvider TimeProvider = TimeProvider.UnscaledTime;
+
+        [Space]
+        public UnityEvent OnLongPressRecognized;
 
         [HideInInspector] public MonoBehaviour CoroutineRunner { get; set; }
 
@@ -61,7 +64,7 @@ namespace Gilzoide.GestureRecognizers.Recognizers
         protected IEnumerator RecognizePress()
         {
             yield return TimeProvider.WaitForSeconds(PressDuration);
-            OnGestureRecognized.Invoke();
+            OnLongPressRecognized.Invoke();
         }
     }
 }
