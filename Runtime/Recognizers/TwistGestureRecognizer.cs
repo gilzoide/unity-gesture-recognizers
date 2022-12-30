@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Gilzoide.GestureRecognizers.Recognizers.Common;
 using UnityEngine;
 
-namespace Gilzoide.GestureRecognizers
+namespace Gilzoide.GestureRecognizers.Recognizers
 {
+    [Serializable]
     public class TwistGestureRecognizer : AContinuousGestureRecognizer
     {
         [Header("Options")]
@@ -19,7 +22,7 @@ namespace Gilzoide.GestureRecognizers
         protected float _accumulatedRotation;
         protected bool _firstMove;
 
-        protected override void TouchStarted(int touchId, Vector2 position)
+        public override void TouchStarted(int touchId, Vector2 position)
         {
             if (IsTwisting)
             {
@@ -34,7 +37,7 @@ namespace Gilzoide.GestureRecognizers
             }
         }
 
-        protected override void TouchMoved(int touchId, Vector2 position)
+        public override void TouchMoved(int touchId, Vector2 position)
         {
             if (!IsTwisting)
             {
@@ -61,7 +64,7 @@ namespace Gilzoide.GestureRecognizers
             }
         }
 
-        protected override void TouchEnded(int touchId)
+        public override void TouchEnded(int touchId)
         {
             bool wasPinching = IsTwisting;
             base.TouchEnded(touchId);

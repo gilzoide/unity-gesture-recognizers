@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
+using Gilzoide.GestureRecognizers.Recognizers.Common;
 using UnityEngine;
 
-namespace Gilzoide.GestureRecognizers
+namespace Gilzoide.GestureRecognizers.Recognizers
 {
+    [Serializable]
     public class LongPressGestureRecognizer : AGestureRecognizer
     {
         [Header("Options")]
@@ -11,6 +14,8 @@ namespace Gilzoide.GestureRecognizers
         public float AllowableMovement = 10;
         public TimeProvider TimeProvider = TimeProvider.UnscaledTime;
 
+        [HideInInspector] public MonoBehaviour CoroutineRunner { get; set; }
+
         protected Coroutine _pressCoroutine;
         protected Vector2 _initialPosition;
 
@@ -18,22 +23,22 @@ namespace Gilzoide.GestureRecognizers
         {
             if (_pressCoroutine != null)
             {
-                StopCoroutine(_pressCoroutine);
+                CoroutineRunner.StopCoroutine(_pressCoroutine);
             }
         }
 
-        protected override void TouchStarted(int touchId, Vector2 position)
+        public override void TouchStarted(int touchId, Vector2 position)
         {
             base.TouchStarted(touchId, position);
 
             if (TouchCount == NumberOfTouches)
             {
                 _initialPosition = Centroid.Value;
-                _pressCoroutine = StartCoroutine(RecognizePress());
+                _pressCoroutine = CoroutineRunner.StartCoroutine(RecognizePress());
             }
         }
 
-        protected override void TouchMoved(int touchId, Vector2 position)
+        public override void TouchMoved(int touchId, Vector2 position)
         {
             base.TouchMoved(touchId, position);
 
@@ -43,7 +48,7 @@ namespace Gilzoide.GestureRecognizers
             }
         }
 
-        protected override void TouchEnded(int touchId)
+        public override void TouchEnded(int touchId)
         {
             base.TouchEnded(touchId);
 

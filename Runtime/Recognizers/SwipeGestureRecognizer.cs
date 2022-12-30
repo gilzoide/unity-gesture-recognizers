@@ -1,7 +1,10 @@
+using System;
+using Gilzoide.GestureRecognizers.Recognizers.Common;
 using UnityEngine;
 
-namespace Gilzoide.GestureRecognizers
+namespace Gilzoide.GestureRecognizers.Recognizers
 {
+    [Serializable]
     public class SwipeGestureRecognizer : AGestureRecognizer
     {
         [Header("Options")]
@@ -20,7 +23,7 @@ namespace Gilzoide.GestureRecognizers
         protected Vector2 _initialPosition;
         protected float _initialTime;
 
-        protected override void TouchStarted(int touchId, Vector2 position)
+        public override void TouchStarted(int touchId, Vector2 position)
         {
             if (IsSwiping)
             {
@@ -35,7 +38,7 @@ namespace Gilzoide.GestureRecognizers
             }
         }
 
-        protected override void TouchMoved(int touchId, Vector2 position)
+        public override void TouchMoved(int touchId, Vector2 position)
         {
             base.TouchMoved(touchId, position);
             if (IsSwiping)
@@ -56,7 +59,7 @@ namespace Gilzoide.GestureRecognizers
 
         }
 
-        protected override void TouchEnded(int touchId)
+        public override void TouchEnded(int touchId)
         {
             bool wasSwiping = IsSwiping;
             base.TouchEnded(touchId);

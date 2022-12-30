@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
-namespace Gilzoide.GestureRecognizers
+namespace Gilzoide.GestureRecognizers.Recognizers
 {
+    [Serializable]
     public class TapGestureRecognizer : AGestureRecognizer
     {
         [Header("Options")]
@@ -20,7 +22,7 @@ namespace Gilzoide.GestureRecognizers
             _lastTapTime = CurrentTime;
         }
 
-        protected override void TouchStarted(int touchId, Vector2 position)
+        public override void TouchStarted(int touchId, Vector2 position)
         {
             base.TouchStarted(touchId, position);
             if (_tapsRecognized > 0 && CurrentTime > _lastTapTime + MultiTapDelayWindow)
@@ -35,7 +37,7 @@ namespace Gilzoide.GestureRecognizers
             }
         }
 
-        protected override void TouchEnded(int touchId)
+        public override void TouchEnded(int touchId)
         {
             base.TouchEnded(touchId);
 

@@ -1,7 +1,10 @@
+using System;
+using Gilzoide.GestureRecognizers.Recognizers.Common;
 using UnityEngine;
 
-namespace Gilzoide.GestureRecognizers
+namespace Gilzoide.GestureRecognizers.Recognizers
 {
+    [Serializable]
     public class PinchGestureRecognizer : AContinuousGestureRecognizer
     {
         [Header("Options")]
@@ -17,7 +20,7 @@ namespace Gilzoide.GestureRecognizers
         protected float _initialDistanceToCentroid = 1;
         protected bool _firstMove;
 
-        protected override void TouchStarted(int touchId, Vector2 position)
+        public override void TouchStarted(int touchId, Vector2 position)
         {
             if (IsPinching)
             {
@@ -32,7 +35,7 @@ namespace Gilzoide.GestureRecognizers
             }
         }
 
-        protected override void TouchMoved(int touchId, Vector2 position)
+        public override void TouchMoved(int touchId, Vector2 position)
         {
             if (!IsPinching)
             {
@@ -55,7 +58,7 @@ namespace Gilzoide.GestureRecognizers
             OnScaleChanged.Invoke(currentScale);
         }
 
-        protected override void TouchEnded(int touchId)
+        public override void TouchEnded(int touchId)
         {
             bool wasPinching = IsPinching;
             base.TouchEnded(touchId);
