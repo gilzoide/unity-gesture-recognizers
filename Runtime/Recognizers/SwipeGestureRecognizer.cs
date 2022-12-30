@@ -9,7 +9,7 @@ namespace Gilzoide.GestureRecognizers.Recognizers
     {
         [Header("Options")]
         [Min(1)] public int NumberOfTouches = 1;
-        [Min(0)] public float MinimumDistance = 50;
+        [Min(0)] public float MinimumDistance = 1;
         [Min(0)] public float MinimumVelocity = 1000;
         public SwipeDirection SupportedDirections = SwipeDirection.Up;
         public TimeProvider TimeProvider = TimeProvider.UnscaledTime;
