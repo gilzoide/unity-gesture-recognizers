@@ -9,9 +9,40 @@ namespace Gilzoide.GestureRecognizers.Input
         public Rect ViewportRect = new Rect(0, 0, 1, 1);
         public T GestureRecognizer = new T();
 
+        protected Vector2 _lastMousePosition;
+
+        protected virtual void Start()
+        {
+            _lastMousePosition = UnityEngine.Input.mousePosition;
+        }
+
         protected virtual void Update()
         {
             Vector2 screenSize = new Vector2(Screen.width, Screen.height);
+
+            Vector2 mousePosition = UnityEngine.Input.mousePosition;
+            bool mouseMoved = mousePosition != _lastMousePosition;
+            for (int i = 0; i < 3; i++)
+            {
+                int touchId = MouseButtonToTouchId(i);
+                if (UnityEngine.Input.GetMouseButtonDown(i))
+                {
+                    if (ViewportRect.Contains(mousePosition / screenSize))
+                    {
+                        GestureRecognizer.TouchStarted(touchId, mousePosition);
+                    }
+                }
+                else if (UnityEngine.Input.GetMouseButtonUp(i))
+                {
+                    GestureRecognizer.TouchEnded(touchId);
+                }
+                else if (mouseMoved && UnityEngine.Input.GetMouseButton(i))
+                {
+                    GestureRecognizer.TouchMoved(touchId, mousePosition);
+                }
+            }
+            _lastMousePosition = mousePosition;
+
             for (int i = 0; i < UnityEngine.Input.touchCount; i++)
             {
                 Touch touch = UnityEngine.Input.GetTouch(i);
@@ -34,6 +65,11 @@ namespace Gilzoide.GestureRecognizers.Input
                         break;
                 }
             }
+        }
+
+        protected int MouseButtonToTouchId(int index)
+        {
+            return -index - 1;
         }
     }
 }
