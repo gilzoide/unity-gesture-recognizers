@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Gilzoide.GestureRecognizers.EventSystems
+namespace Gilzoide.GestureRecognizers.EventSystem
 {
     public abstract class AEventSystemGestureRecognizer<T> : MonoBehaviour,
         IPointerDownHandler, IPointerUpHandler, IInitializePotentialDragHandler, IDragHandler

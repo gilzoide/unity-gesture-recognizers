@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Gilzoide.GestureRecognizers.EventSystems
+namespace Gilzoide.GestureRecognizers.EventSystem
 {
     [RequireComponent(typeof(RectTransform))]
     public class EdgePanRecognizer : AEventSystemGestureRecognizer<EdgePanGestureRecognizer>

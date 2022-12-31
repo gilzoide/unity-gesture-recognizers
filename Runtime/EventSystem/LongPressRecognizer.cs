@@ -1,4 +1,4 @@
-namespace Gilzoide.GestureRecognizers.EventSystems
+namespace Gilzoide.GestureRecognizers.EventSystem
 {
     public class LongPressRecognizer : AEventSystemGestureRecognizer<LongPressGestureRecognizer>
     {
