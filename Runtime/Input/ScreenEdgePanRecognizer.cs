@@ -1,4 +1,3 @@
-using Gilzoide.GestureRecognizers.Recognizers;
 using UnityEngine;
 
 namespace Gilzoide.GestureRecognizers.Input

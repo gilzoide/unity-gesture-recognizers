@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Gilzoide.GestureRecognizers.Recognizers.Common
+namespace Gilzoide.GestureRecognizers.Common
 {
     public class TouchTracker
     {

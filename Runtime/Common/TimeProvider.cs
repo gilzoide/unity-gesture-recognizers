@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Gilzoide.GestureRecognizers.Recognizers.Common
+namespace Gilzoide.GestureRecognizers.Common
 {
     public enum TimeProvider
     {

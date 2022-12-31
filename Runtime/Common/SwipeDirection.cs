@@ -1,6 +1,6 @@
 using System;
 
-namespace Gilzoide.GestureRecognizers.Recognizers.Common
+namespace Gilzoide.GestureRecognizers.Common
 {
     [Flags]
     public enum SwipeDirection

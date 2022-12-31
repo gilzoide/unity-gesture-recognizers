@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Gilzoide.GestureRecognizers.Recognizers.Common
+namespace Gilzoide.GestureRecognizers.Common
 {
     public static class PooledListUtils
     {

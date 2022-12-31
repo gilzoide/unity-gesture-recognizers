@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
-using Gilzoide.GestureRecognizers.Recognizers.Common;
+using Gilzoide.GestureRecognizers.Common;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Gilzoide.GestureRecognizers.Recognizers
+namespace Gilzoide.GestureRecognizers
 {
     [Serializable]
     public class LongPressGestureRecognizer : AGestureRecognizer

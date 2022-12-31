@@ -1,8 +1,8 @@
 using System;
-using Gilzoide.GestureRecognizers.Recognizers.Common;
+using Gilzoide.GestureRecognizers.Common;
 using UnityEngine;
 
-namespace Gilzoide.GestureRecognizers.Recognizers
+namespace Gilzoide.GestureRecognizers
 {
     [Serializable]
     public class SwipeGestureRecognizer : AGestureRecognizer
