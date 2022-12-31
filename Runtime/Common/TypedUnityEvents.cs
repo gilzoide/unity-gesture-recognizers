@@ -1,11 +1,18 @@
 using System;
+using Gilzoide.GestureRecognizers.Gestures;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Gilzoide.GestureRecognizers.Common
 {
-    [Serializable] public class UnityEventVector2 : UnityEvent<Vector2> {}
+    // primitives
     [Serializable] public class UnityEventFloat : UnityEvent<float> {}
+    [Serializable] public class UnityEventVector2 : UnityEvent<Vector2> {}
+    
+    // enums
     [Serializable] public class UnityEventSwipeDirection : UnityEvent<SwipeDirection> {}
     [Serializable] public class UnityEventRectEdge : UnityEvent<RectEdge> {}
+    
+    // gesture structs
+    [Serializable] public class UnityEventTapGesture : UnityEvent<TapGesture> {}
 }

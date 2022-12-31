@@ -1,7 +1,7 @@
 using System;
 using Gilzoide.GestureRecognizers.Common;
+using Gilzoide.GestureRecognizers.Gestures;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Gilzoide.GestureRecognizers
 {
@@ -14,10 +14,11 @@ namespace Gilzoide.GestureRecognizers
         public TimeProvider TimeProvider = TimeProvider.UnscaledTime;
 
         [Space]
-        public UnityEvent OnTapRecognized;
+        public UnityEventTapGesture OnTapRecognized;
 
         protected int _tapsRecognized = 0;
         protected float _lastTapTime;
+        protected Vector2 _lastTapPosition;
 
         public void Clear()
         {
@@ -36,6 +37,7 @@ namespace Gilzoide.GestureRecognizers
             if (_touchTracker.Count == NumberOfTouches)
             {
                 _tapsRecognized++;
+                _lastTapPosition = Centroid.Value;
                 _lastTapTime = TimeProvider.GetTime();
             }
         }
@@ -46,7 +48,12 @@ namespace Gilzoide.GestureRecognizers
             
             if (_tapsRecognized == NumberOfTaps && TimeProvider.GetTime() <= _lastTapTime + MultiTapDelayWindow)
             {
-                OnTapRecognized.Invoke();
+                OnTapRecognized.Invoke(new TapGesture
+                {
+                    NumberOfTouches = NumberOfTouches,
+                    NumberOfTaps = NumberOfTaps,
+                    Position = _lastTapPosition,
+                });
                 Clear();
             }
         }
