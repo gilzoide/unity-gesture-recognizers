@@ -15,4 +15,5 @@ namespace Gilzoide.GestureRecognizers.Common
     
     // gesture structs
     [Serializable] public class UnityEventTapGesture : UnityEvent<TapGesture> {}
+    [Serializable] public class UnityEventLongPressGesture : UnityEvent<LongPressGesture> {}
 }
