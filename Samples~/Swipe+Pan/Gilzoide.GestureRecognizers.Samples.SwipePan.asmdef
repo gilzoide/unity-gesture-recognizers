@@ -1,0 +1,16 @@
+{
+    "name": "Gilzoide.GestureRecognizers.Samples.SwipePan",
+    "rootNamespace": "Gilzoide.GestureRecognizers.Samples.SwipePan",
+    "references": [
+        "GUID:3a112714c7cd74c16abf561692e52c25"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

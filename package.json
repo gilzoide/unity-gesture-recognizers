@@ -7,5 +7,12 @@
   "license": "Unlicense",
   "author": {
     "name": "Gil Barbosa Reis"
-  }
+  },
+  "samples": [
+    {
+      "displayName": "Swipe + Pan = Soccer",
+      "description": "A swipe to throw ball + pan to move goalkeeper minigame",
+      "path": "Samples~/Swipe+Pan"
+    }
+  ]
 }
