@@ -19,4 +19,5 @@ namespace Gilzoide.GestureRecognizers.Common
     [Serializable] public class UnityEventPanGesture : UnityEvent<PanGesture> {}
     [Serializable] public class UnityEventEdgePanGesture : UnityEvent<EdgePanGesture> {}
     [Serializable] public class UnityEventPinchGesture : UnityEvent<PinchGesture> {}
+    [Serializable] public class UnityEventTwistGesture : UnityEvent<TwistGesture> {}
 }

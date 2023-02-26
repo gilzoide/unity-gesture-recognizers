@@ -13,9 +13,8 @@ namespace Gilzoide.GestureRecognizers
         [Min(2)] public int NumberOfTouches = 2;
         
         [Space]
-        public UnityEvent OnTwistStarted;
-        public UnityEventFloat OnRotationDelta;
-        public UnityEventFloat OnRotationChanged;
+        public UnityEventTwistGesture OnTwistStarted;
+        public UnityEventTwistGesture OnTwistRecognized;
         public UnityEvent OnGestureEnded;
 
         public bool IsTwisting => TouchCount >= NumberOfTouches;
@@ -47,10 +46,18 @@ namespace Gilzoide.GestureRecognizers
                 return;
             }
 
+            Vector2 centroid = Centroid.Value;
+
             if (_firstMove)
             {
                 _firstMove = false;
-                OnTwistStarted.Invoke();
+                OnTwistStarted.Invoke(new TwistGesture
+                {
+                    NumberOfTouches = NumberOfTouches,
+                    Center = centroid,
+                    Rotation = 0,
+                    Delta = 0,
+                });
             }
 
             using (PooledListUtils.GetList(_touchTracker.EnumerateTouchVectors(), out List<Vector2> previousVectors))
@@ -59,10 +66,14 @@ namespace Gilzoide.GestureRecognizers
 
                 IEnumerable<Vector2> currentVectors = _touchTracker.EnumerateTouchVectors();
                 float deltaRotation = previousVectors.Zip(currentVectors, Vector2.SignedAngle).Average();
-                OnRotationDelta.Invoke(deltaRotation);
-
                 _accumulatedRotation += deltaRotation;
-                OnRotationChanged.Invoke(_accumulatedRotation);
+                OnTwistRecognized.Invoke(new TwistGesture
+                {
+                    NumberOfTouches = NumberOfTouches,
+                    Center = centroid,
+                    Rotation = _accumulatedRotation,
+                    Delta = deltaRotation,
+                });
             }
         }
 
