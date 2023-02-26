@@ -12,7 +12,7 @@ Implemented gestures:
 
 Gesture recognizers are implemented as pure C# classes and can be used with your own touch input data.
 
-Recognizers based on [EventSystem](Runtime/EventSystems) can be used in uGUI-based UIs, as well as physics objects if your Camera has `PhysicsRaycaster` or `Physics2DRaycaster` components.
+Recognizers based on [EventSystem](Runtime/EventSystem) can be used in uGUI-based UIs, as well as physics objects if your Camera has `PhysicsRaycaster` or `Physics2DRaycaster` components.
 
 Recognizers based on [Input](Runtime/Input) detect gestures anywhere in the screen or a configurable portion of it.
 

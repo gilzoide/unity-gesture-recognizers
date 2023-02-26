@@ -13,9 +13,8 @@ namespace Gilzoide.GestureRecognizers
         public RectEdge SupportedEdges = RectEdge.Left;
 
         [Space]
-        public UnityEventRectEdge OnEdgePanStarted;
-        public UnityEventVector2 OnPositionDelta;
-        public UnityEventVector2 OnPositionChanged;
+        public UnityEventEdgePanGesture OnEdgePanStarted;
+        public UnityEventEdgePanGesture OnEdgePanRecognized;
         public UnityEvent OnGestureEnded;
 
         public Rect Rect { get; set; }
@@ -25,6 +24,7 @@ namespace Gilzoide.GestureRecognizers
         public Vector2 Position => IsPanning ? GetPosition() : Vector2.zero;
         
         protected bool _firstMove;
+        protected Vector2 _initialPosition;
         protected RectEdge _possibleEdges = RectEdge.None;
 
         public override void TouchStarted(int touchId, Vector2 position)
@@ -61,19 +61,33 @@ namespace Gilzoide.GestureRecognizers
                 return;
             }
 
+            Vector2 previousPosition = GetPosition();
+
             if (_firstMove)
             {
                 _firstMove = false;
-                OnEdgePanStarted.Invoke(_possibleEdges);
+                _initialPosition = previousPosition;
+                OnEdgePanStarted.Invoke(new EdgePanGesture
+                {
+                    NumberOfTouches = NumberOfTouches,
+                    InitialPosition = _initialPosition,
+                    Position = previousPosition,
+                    Delta = Vector2.zero,
+                    Edge = _possibleEdges,
+                });
             }
-
-            Vector2 previousPosition = GetPosition();
             
             base.TouchMoved(touchId, position);
 
             Vector2 currentPosition = GetPosition();
-            OnPositionDelta.Invoke(currentPosition - previousPosition);
-            OnPositionChanged.Invoke(currentPosition);
+            OnEdgePanRecognized.Invoke(new EdgePanGesture
+            {
+                NumberOfTouches = NumberOfTouches,
+                InitialPosition = _initialPosition,
+                Position = currentPosition,
+                Delta = currentPosition - previousPosition,
+                Edge = _possibleEdges,
+            });
         }
 
         public override void TouchEnded(int touchId)

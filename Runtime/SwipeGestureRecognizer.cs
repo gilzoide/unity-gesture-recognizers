@@ -14,7 +14,7 @@ namespace Gilzoide.GestureRecognizers
         public TimeProvider TimeProvider = TimeProvider.UnscaledTime;
 
         [Space]
-        public UnityEventSwipeDirection OnSwipeRecognized;
+        public UnityEventSwipeGesture OnSwipeRecognized;
 
         public bool IsSwiping => TouchCount >= NumberOfTouches;
         public SwipeDirection Direction { get; protected set; } = SwipeDirection.None;
@@ -42,19 +42,22 @@ namespace Gilzoide.GestureRecognizers
             base.TouchMoved(touchId, position);
             if (IsSwiping)
             {
-                SwipeDirection direction = GetSwipeDirection(
-                    GetPosition() - _initialPosition,
-                    TimeProvider.GetTime() - _initialTime,
-                    MinimumDistance,
-                    MinimumVelocity
-                );
-                if ((direction & SupportedDirections) != 0)
+                Vector2 positionDelta = GetPosition() - _initialPosition;
+                float timeDelta = TimeProvider.GetTime() - _initialTime;
+                SwipeDirection direction = SupportedDirections & GetSwipeDirection(positionDelta, timeDelta);
+                if (direction != 0)
                 {
                     Direction = direction;
-                    OnSwipeRecognized.Invoke(direction);
+                    OnSwipeRecognized.Invoke(new SwipeGesture
+                    {
+                        NumberOfTouches = NumberOfTouches,
+                        InitialPosition = _initialPosition,
+                        Vector = positionDelta,
+                        Time = timeDelta,
+                        SwipeDirection = Direction,
+                    });
                 }
             }
-
         }
 
         public override void TouchEnded(int touchId)
@@ -72,22 +75,26 @@ namespace Gilzoide.GestureRecognizers
             return Centroid.Value;
         }
 
+        public SwipeDirection GetSwipeDirection(Vector2 positionDelta, float timeDelta)
+        {
+            return GetSwipeDirection(positionDelta, timeDelta, MinimumDistance, MinimumVelocity);
+        }
+
         public static SwipeDirection GetSwipeDirection(Vector2 positionDelta, float timeDelta, float distanceThreshold, float velocityThreshold)
         {
+            SwipeDirection direction = SwipeDirection.None;
+
             float diffX = Mathf.Abs(positionDelta.x);
             float diffY = Mathf.Abs(positionDelta.y);
-            if (diffX >= diffY)
+            if (diffX >= distanceThreshold && timeDelta > 0 && (diffX / timeDelta) >= velocityThreshold)
             {
-                if (diffX >= distanceThreshold && timeDelta > 0 && (diffX / timeDelta) >= velocityThreshold)
-                {
-                    return positionDelta.x > 0 ? SwipeDirection.Right : SwipeDirection.Left;
-                }
+                direction |= positionDelta.x > 0 ? SwipeDirection.Right : SwipeDirection.Left;
             }
-            else if (diffY >= distanceThreshold && timeDelta > 0 && (diffY / timeDelta) >= velocityThreshold)
+            if (diffY >= distanceThreshold && timeDelta > 0 && (diffY / timeDelta) >= velocityThreshold)
             {
-                return positionDelta.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
+                direction |= positionDelta.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
             }
-            return SwipeDirection.None;
+            return direction;
         }
     }
 }
