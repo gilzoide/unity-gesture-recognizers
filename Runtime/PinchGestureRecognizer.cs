@@ -11,9 +11,8 @@ namespace Gilzoide.GestureRecognizers
         [Min(2)] public int NumberOfTouches = 2;
         
         [Space]
-        public UnityEvent OnPinchStarted;
-        public UnityEventFloat OnScaleDelta;
-        public UnityEventFloat OnScaleChanged;
+        public UnityEventPinchGesture OnPinchStarted;
+        public UnityEventPinchGesture OnPinchRecognized;
         public UnityEvent OnGestureEnded;
 
         public bool IsPinching => TouchCount >= NumberOfTouches;
@@ -45,10 +44,18 @@ namespace Gilzoide.GestureRecognizers
                 return;
             }
 
+            Vector2 centroid = Centroid.Value;
+
             if (_firstMove)
             {
                 _firstMove = false;
-                OnPinchStarted.Invoke();
+                OnPinchStarted.Invoke(new PinchGesture
+                {
+                    NumberOfTouches = NumberOfTouches,
+                    Center = centroid,
+                    Scale = 1,
+                    Delta = 0,
+                });
             }
 
             float previousScale = GetCurrentScale();
@@ -56,8 +63,13 @@ namespace Gilzoide.GestureRecognizers
             base.TouchMoved(touchId, position);
    
             float currentScale = GetCurrentScale();
-            OnScaleDelta.Invoke(currentScale - previousScale);
-            OnScaleChanged.Invoke(currentScale);
+            OnPinchRecognized.Invoke(new PinchGesture
+            {
+                NumberOfTouches = NumberOfTouches,
+                Center = centroid,
+                Scale = currentScale,
+                Delta = currentScale - previousScale,
+            });
         }
 
         public override void TouchEnded(int touchId)
