@@ -11,15 +11,15 @@ namespace Gilzoide.GestureRecognizers
         [Min(1)] public int NumberOfTouches = 1;
         
         [Space]
-        public UnityEvent OnPanStarted;
-        public UnityEventVector2 OnPositionDelta;
-        public UnityEventVector2 OnPositionChanged;
+        public UnityEventPanGesture OnPanStarted;
+        public UnityEventPanGesture OnPanRecognized;
         public UnityEvent OnGestureEnded;
 
         public bool IsPanning => TouchCount >= NumberOfTouches;
         public Vector2 Position => IsPanning ? GetPosition() : Vector2.zero;
         
         protected bool _firstMove;
+        protected Vector2 _initialPosition;
 
         public override void TouchStarted(int touchId, Vector2 position)
         {
@@ -43,19 +43,31 @@ namespace Gilzoide.GestureRecognizers
                 return;
             }
 
+            Vector2 previousPosition = GetPosition();
+
             if (_firstMove)
             {
                 _firstMove = false;
-                OnPanStarted.Invoke();
+                _initialPosition = previousPosition;
+                OnPanStarted.Invoke(new PanGesture
+                {
+                    NumberOfTouches = NumberOfTouches,
+                    InitialPosition = _initialPosition,
+                    Position = previousPosition,
+                    Delta = Vector2.zero,
+                });
             }
-
-            Vector2 previousPosition = GetPosition();
             
             base.TouchMoved(touchId, position);
 
             Vector2 currentPosition = GetPosition();
-            OnPositionDelta.Invoke(currentPosition - previousPosition);
-            OnPositionChanged.Invoke(currentPosition);
+            OnPanRecognized.Invoke(new PanGesture
+            {
+                NumberOfTouches = NumberOfTouches,
+                InitialPosition = _initialPosition,
+                Position = currentPosition,
+                Delta = currentPosition - previousPosition,
+            });
         }
 
         public override void TouchEnded(int touchId)
