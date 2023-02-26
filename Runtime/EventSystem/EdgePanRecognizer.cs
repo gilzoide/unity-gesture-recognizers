@@ -31,6 +31,11 @@ namespace Gilzoide.GestureRecognizers.EventSystem
             }
         }
 
+        protected virtual void LateUpdate()
+        {
+            transform.hasChanged = false;
+        }
+
         protected void RefreshRect()
         {
             GestureRecognizer.Rect = GetScreenRect();
