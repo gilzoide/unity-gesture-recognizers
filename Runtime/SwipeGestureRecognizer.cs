@@ -82,20 +82,19 @@ namespace Gilzoide.GestureRecognizers
 
         public static SwipeDirection GetSwipeDirection(Vector2 positionDelta, float timeDelta, float distanceThreshold, float velocityThreshold)
         {
+            SwipeDirection direction = SwipeDirection.None;
+
             float diffX = Mathf.Abs(positionDelta.x);
             float diffY = Mathf.Abs(positionDelta.y);
-            if (diffX >= diffY)
+            if (diffX >= distanceThreshold && timeDelta > 0 && (diffX / timeDelta) >= velocityThreshold)
             {
-                if (diffX >= distanceThreshold && timeDelta > 0 && (diffX / timeDelta) >= velocityThreshold)
-                {
-                    return positionDelta.x > 0 ? SwipeDirection.Right : SwipeDirection.Left;
-                }
+                direction |= positionDelta.x > 0 ? SwipeDirection.Right : SwipeDirection.Left;
             }
-            else if (diffY >= distanceThreshold && timeDelta > 0 && (diffY / timeDelta) >= velocityThreshold)
+            if (diffY >= distanceThreshold && timeDelta > 0 && (diffY / timeDelta) >= velocityThreshold)
             {
-                return positionDelta.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
+                direction |= positionDelta.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
             }
-            return SwipeDirection.None;
+            return direction;
         }
     }
 }
