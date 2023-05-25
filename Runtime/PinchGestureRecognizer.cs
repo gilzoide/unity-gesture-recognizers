@@ -11,9 +11,9 @@ namespace Gilzoide.GestureRecognizers
         [Min(2)] public int NumberOfTouches = 2;
         
         [Space]
-        public UnityEventPinchGesture OnPinchStarted;
-        public UnityEventPinchGesture OnPinchRecognized;
-        public UnityEvent OnGestureEnded;
+        public UnityEventPinchGesture OnPinchStarted = new UnityEventPinchGesture();
+        public UnityEventPinchGesture OnPinchRecognized = new UnityEventPinchGesture();
+        public UnityEvent OnGestureEnded = new UnityEvent();
 
         public bool IsPinching => TouchCount >= NumberOfTouches;
         public float Scale => IsPinching ? GetCurrentScale() : 1;

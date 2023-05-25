@@ -15,7 +15,7 @@ namespace Gilzoide.GestureRecognizers
         public TimeProvider TimeProvider = TimeProvider.UnscaledTime;
 
         [Space]
-        public UnityEventLongPressGesture OnLongPressRecognized;
+        public UnityEventLongPressGesture OnLongPressRecognized = new UnityEventLongPressGesture();
 
         [HideInInspector] public MonoBehaviour CoroutineRunner { get; set; }
 

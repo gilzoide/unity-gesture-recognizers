@@ -14,7 +14,7 @@ namespace Gilzoide.GestureRecognizers
         public TimeProvider TimeProvider = TimeProvider.UnscaledTime;
 
         [Space]
-        public UnityEventSwipeGesture OnSwipeRecognized;
+        public UnityEventSwipeGesture OnSwipeRecognized = new UnityEventSwipeGesture();
 
         public bool IsSwiping => TouchCount >= NumberOfTouches;
         public SwipeDirection Direction { get; protected set; } = SwipeDirection.None;

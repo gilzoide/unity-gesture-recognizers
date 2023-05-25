@@ -11,9 +11,9 @@ namespace Gilzoide.GestureRecognizers
         [Min(1)] public int NumberOfTouches = 1;
         
         [Space]
-        public UnityEventPanGesture OnPanStarted;
-        public UnityEventPanGesture OnPanRecognized;
-        public UnityEvent OnGestureEnded;
+        public UnityEventPanGesture OnPanStarted = new UnityEventPanGesture();
+        public UnityEventPanGesture OnPanRecognized = new UnityEventPanGesture();
+        public UnityEvent OnGestureEnded = new UnityEvent();
 
         public bool IsPanning => TouchCount >= NumberOfTouches;
         public Vector2 Position => IsPanning ? GetPosition() : Vector2.zero;

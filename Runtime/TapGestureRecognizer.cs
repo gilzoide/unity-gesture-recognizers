@@ -14,7 +14,7 @@ namespace Gilzoide.GestureRecognizers
         public TimeProvider TimeProvider = TimeProvider.UnscaledTime;
 
         [Space]
-        public UnityEventTapGesture OnTapRecognized;
+        public UnityEventTapGesture OnTapRecognized = new UnityEventTapGesture();
 
         protected int _tapsRecognized = 0;
         protected float _lastTapTime;

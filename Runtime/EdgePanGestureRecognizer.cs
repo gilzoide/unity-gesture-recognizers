@@ -13,9 +13,9 @@ namespace Gilzoide.GestureRecognizers
         public RectEdge SupportedEdges = RectEdge.Left;
 
         [Space]
-        public UnityEventEdgePanGesture OnEdgePanStarted;
-        public UnityEventEdgePanGesture OnEdgePanRecognized;
-        public UnityEvent OnGestureEnded;
+        public UnityEventEdgePanGesture OnEdgePanStarted = new UnityEventEdgePanGesture();
+        public UnityEventEdgePanGesture OnEdgePanRecognized = new UnityEventEdgePanGesture();
+        public UnityEvent OnGestureEnded = new UnityEvent();
 
         public Rect Rect { get; set; }
 

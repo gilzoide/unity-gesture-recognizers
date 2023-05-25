@@ -13,9 +13,9 @@ namespace Gilzoide.GestureRecognizers
         [Min(2)] public int NumberOfTouches = 2;
         
         [Space]
-        public UnityEventTwistGesture OnTwistStarted;
-        public UnityEventTwistGesture OnTwistRecognized;
-        public UnityEvent OnGestureEnded;
+        public UnityEventTwistGesture OnTwistStarted = new UnityEventTwistGesture();
+        public UnityEventTwistGesture OnTwistRecognized = new UnityEventTwistGesture();
+        public UnityEvent OnGestureEnded = new UnityEvent();
 
         public bool IsTwisting => TouchCount >= NumberOfTouches;
         public float Rotation => IsTwisting ? _accumulatedRotation : 0;
