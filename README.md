@@ -1,4 +1,6 @@
 # Gesture Recognizers
+[![openupm](https://img.shields.io/npm/v/com.gilzoide.gesture-recognizers?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.gilzoide.gesture-recognizers/)
+
 Touch/pointer gesture recognizer scripts based on [EventSystem handlers](https://docs.unity3d.com/Packages/com.unity.ugui@1.0/manual/SupportedEvents.html) or [Input](https://docs.unity3d.com/ScriptReference/Input.html).
 
 Implemented gestures:
@@ -18,7 +20,12 @@ Recognizers based on [Input](Runtime/Input) detect gestures anywhere in the scre
 
 
 ## How to install
-Install via [Unity Package Manager](https://docs.unity3d.com/Manual/upm-ui-giturl.html) using the following URL:
+This package is available on the [openupm registry](https://openupm.com/) and can be installed using the [openupm-cli](https://github.com/openupm/openupm-cli):
 ```
-https://github.com/gilzoide/unity-gesture-recognizers
+openupm add com.gilzoide.gesture-recognizers
+```
+
+Otherwise, you can install directly using the [Unity Package Manager](https://docs.unity3d.com/Manual/upm-ui-giturl.html) with the following URL:
+```
+https://github.com/gilzoide/unity-gesture-recognizers.git#1.0.0
 ```
